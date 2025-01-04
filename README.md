@@ -43,6 +43,7 @@ The next step was to apply an image augmentation process to improve our models' 
 The dataset was split into 70% for training, 15% for validation, and 15% for testing. There are 6369 training set images, 452 validating, and 450 tests, totaling 7271 images. Moreover, our dataset includes 31265 labels.
 
 ### Sample Data
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
 
 ## Installation
 
