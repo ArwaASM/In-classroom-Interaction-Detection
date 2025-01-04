@@ -45,6 +45,12 @@ The dataset was split into 70% for training, 15% for validation, and 15% for tes
 ### Sample Data
 ![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
 
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%202.png?raw=true)
+
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Validating%20Sample.png?raw=true)
+
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Testing%20Sample.png?raw=true)
+
 ## Installation
 
 ## Models Training
