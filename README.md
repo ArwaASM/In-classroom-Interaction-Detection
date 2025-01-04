@@ -33,6 +33,15 @@ This project uses three object detection algorithms: YOLOv8, Faster-RCNN, and Re
 - sklearn.metrics Library
 - matplotlib.pyplot Library
 ## Dataset Preparation
+Our dataset was created and prepared using the Roboflow tool, where the real classroom video recordings were segmented into frames, where the frame rate was one frame every three seconds. Roboflow also utilized to assign multiple labels for each image during the image annotation process to feed the object detection models effectively. After cleaning and annotating, the dataset size was reduced to 3,025 images, automatically oriented, and resized to 224 × 224 pixels. 
+
+The next step was to apply an image augmentation process to improve our models' performance and generalization ability, thus increasing their capacity to perform effectively on unseen images. To this end, we applied three types of augmentation resulting in 7,259 images: 
+1. Rotation: 15-degree rotation
+2. Saturation: 25% increase in saturation
+3. Noise: 1.02% added noise.
+
+The dataset was split into 70% for training, 15% for validation, and 15% for testing. There are 6369 training set images, 452 validating, and 450 tests, totaling 7271 images. Moreover, our dataset includes 31265 labels.
+
 ### Sample Data
 
 ## Installation
