@@ -32,6 +32,7 @@ This project uses three object detection algorithms: YOLOv8, Faster-RCNN, and Re
 - COCOeval Library
 - sklearn.metrics Library
 - matplotlib.pyplot Library
+  
 ## Dataset Preparation
 Our dataset was created and prepared using the Roboflow tool, where the real classroom video recordings were segmented into frames, where the frame rate was one frame every three seconds. Roboflow is also utilized to assign multiple labels for each image during the image annotation process to feed the object detection models effectively. After cleaning and annotating, the dataset size was reduced to 3,025 images, automatically oriented, and resized to 224 × 224 pixels. 
 
@@ -61,8 +62,178 @@ YOLOv8 (You Only Look Once, Version 8) is a state-of-the-art object detection al
 
 #### Configuration
 
+##### Install YOLOv8 
+
 ```
-git clone https://github.com/your-username/person-tracking.git
+# Pip install method (recommended)
+
+!pip install ultralytics==8.0.196
+
+from IPython import display
+display.clear_output()
+
+import ultralytics
+ultralytics.checks()
+
+from ultralytics import YOLO
+
+from IPython.display import display, Image
+
+```
+
+##### Install Roboflow  
+```
+!pip install roboflow --quiet
+
+!pip install roboflow
+```
+
+##### Import the Dataset 
+```
+from roboflow import Roboflow
+rf = Roboflow(api_key="Tp9HSxuOcXKVDZCz5***")
+project = rf.workspace("arwa-almubarak-yiboc").project("students-behaviors-detection-wkavr")
+version = project.version(4)
+dataset = version.download("yolov8")
+
+```
+##### Model Training (YOLOv8x)   
+```
+!pip install -U albumentations
+!pip install -U ultralytics
+
+%cd /content
+
+!yolo task=detect mode=train model=yolov8x.pt data=/content/datasets/students-behaviors-detection-4/data.yaml epochs=120 imgsz=800 plots=True
+```
+120 epochs completed in 4.345 hours.
+Optimizer stripped from runs/detect/train2/weights/last.pt, 123.8MB
+Optimizer stripped from runs/detect/train2/weights/best.pt, 123.8MB
+
+Validating runs/detect/train2/weights/best.pt...
+Ultralytics 8.3.9 🚀 Python-3.10.12 torch-2.4.1+cu121 CUDA:0 (NVIDIA A100-SXM4-40GB, 40514MiB)
+Model summary (fused): 286 layers, 61,606,161 parameters, 0 gradients, 226.8 GFLOPs
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% 15/15 [00:05<00:00,  2.76it/s]
+                   all        450       1849       0.79      0.794      0.845      0.545
+           Closed-Book        171        296      0.857      0.868      0.919       0.58
+       Electronic-Book          5         12      0.993      0.833      0.932      0.486
+               No-Book        167        312      0.809      0.875      0.876      0.559
+           Opened-Book        272        619      0.881      0.874      0.917      0.601
+          Raising-Hand        119        239      0.878      0.811      0.879      0.516
+       Student-Answers         36         39      0.795      0.718      0.871      0.581
+         Student-Reads         54         69      0.627      0.493      0.552      0.402
+        Student-Writes         37         60      0.688      0.633        0.7      0.443
+      Teacher-Explains         65         65      0.872      0.944      0.951      0.712
+Teacher-Follows-up-Students          7          7      0.477      0.857       0.85      0.597
+             Worksheet         84        131      0.809      0.832      0.844      0.517
+Speed: 0.2ms preprocess, 5.0ms inference, 0.0ms loss, 2.9ms postprocess per image
+Results saved to runs/detect/train2
+
+##### Visualize Training Results   
+```
+%cd {HOME}
+Image(filename=f'{HOME}/runs/detect/train2/confusion_matrix.png', width=600)!pip install -U ultralytics
+```
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+
+```
+%cd {HOME}
+Image(filename=f'{HOME}/runs/detect/train2/results.png', width=600)
+```
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+
+```
+%cd {HOME}
+Image(filename=f'{HOME}/runs/detect/train/val_batch0_pred.jpg', width=600)
+```
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+
+##### Model Validation (YOLOv8x) 
+```
+%cd /content
+!yolo task=detect mode=val model=/content/runs/detect/train2/weights/best.pt data=/content/datasets/students-behaviors-detection-4/data.yaml
+```
+/content
+Ultralytics 8.3.9 🚀 Python-3.10.12 torch-2.4.1+cu121 CUDA:0 (NVIDIA A100-SXM4-40GB, 40514MiB)
+Model summary (fused): 286 layers, 61,606,161 parameters, 0 gradients, 226.8 GFLOPs
+val: Scanning /content/datasets/students-behaviors-detection-4/valid/labels.cache... 450 images, 15 backgrounds, 0 corrupt: 100% 450/450 [00:00<?, ?it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% 29/29 [00:07<00:00,  3.93it/s]
+                   all        450       1849       0.79      0.794      0.845      0.545
+           Closed-Book        171        296      0.857      0.868      0.919      0.579
+       Electronic-Book          5         12      0.995      0.833      0.932      0.487
+               No-Book        167        312       0.81      0.874      0.876      0.559
+           Opened-Book        272        619      0.881      0.873      0.917        0.6
+          Raising-Hand        119        239      0.878       0.81      0.879      0.517
+       Student-Answers         36         39      0.795      0.718      0.871      0.574
+         Student-Reads         54         69      0.628      0.493      0.555      0.404
+        Student-Writes         37         60      0.689      0.633      0.698      0.441
+      Teacher-Explains         65         65      0.872      0.942       0.95      0.713
+Teacher-Follows-up-Students          7          7      0.479      0.857       0.85      0.597
+             Worksheet         84        131      0.809      0.832      0.844      0.519
+Speed: 0.9ms preprocess, 8.3ms inference, 0.0ms loss, 3.5ms postprocess per image
+Results saved to runs/detect/val
+💡 Learn more at https://docs.ultralytics.com/modes/val
+
+##### Model Inference (YOLOv8x) 
+```
+%cd /content
+!yolo task=detect mode=predict model=/content/runs/detect/train/weights/best.pt conf=0.5 source=/content/datasets/students-behaviors-detection-4/test/images save=True
+```
+
+##### Model Inference (YOLOv8x) 
+```
+%cd /content
+!yolo task=detect mode=predict model=/content/runs/detect/train/weights/best.pt conf=0.5 source=/content/datasets/students-behaviors-detection-4/test/images save=True
+```
+
+##### Visualize Inference Results (YOLOv8x) 
+```
+import glob
+from IPython.display import Image, display
+
+# Define the base path where the folders are located
+base_path = '/content/runs/detect/'
+
+# List all directories that start with 'predict' in the base path
+subfolders = [os.path.join(base_path, d) for d in os.listdir(base_path)
+              if os.path.isdir(os.path.join(base_path, d)) and d.startswith('predict2')]
+
+# Find the latest folder by modification time
+latest_folder = max(subfolders, key=os.path.getmtime)
+
+image_paths = glob.glob(f'{latest_folder}/*.jpg')[:5]
+
+# Display each image
+for image_path in image_paths:
+    display(Image(filename=image_path, width=600))
+    print("\n")
+```
+
+![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+
+##### Deploy Model on Roboflow (YOLOv8x) 
+```
+project.version(dataset.version).deploy(model_type="yolov8", model_path=f"{HOME}/runs/detect/train/")
+
+import glob
+from IPython.display import Image, display
+
+# Define the base path where the folders are located
+base_path = '/content/runs/detect/'
+
+# List all directories that start with 'predict' in the base path
+subfolders = [os.path.join(base_path, d) for d in os.listdir(base_path)
+              if os.path.isdir(os.path.join(base_path, d)) and d.startswith('predict2')]
+
+# Find the latest folder by modification time
+latest_folder = max(subfolders, key=os.path.getmtime)
+
+image_paths = glob.glob(f'{latest_folder}/*.jpg')[:5]
+
+# Display each image
+for image_path in image_paths:
+    display(Image(filename=image_path, width=600))
+    print("\n")
 ```
 
 ### Faster R-CNN Models
