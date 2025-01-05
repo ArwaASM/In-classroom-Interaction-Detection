@@ -44,13 +44,10 @@ The next step was to apply an image augmentation process to improve our models' 
 The dataset was split into 70% for training, 15% for validation, and 15% for testing. There are 6369 training set images, 452 validating, and 450 tests, totaling 7271 images. Moreover, our dataset includes 31265 labels.
 
 ### Sample Data
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
-
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%202.png?raw=true)
-
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Validating%20Sample.png?raw=true)
-
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Testing%20Sample.png?raw=true)
+![Training Sample ](https://github.com/user-attachments/assets/854ec8ca-1243-42d8-b1fd-aa81890b377d)
+![Training Sample 2](https://github.com/user-attachments/assets/ba34f0d2-f41e-42e0-8ad4-9b0423999adc)
+![Validating Sample](https://github.com/user-attachments/assets/54c65bab-fea4-4cc2-9e84-c5d1ac32719f)
+![Testing Sample](https://github.com/user-attachments/assets/d6aec246-eec9-44c7-bd12-0fdf24fd1d37)
 
 ## Installation
 
@@ -61,7 +58,7 @@ The dataset was split into 70% for training, 15% for validation, and 15% for tes
 YOLOv8 (You Only Look Once, Version 8) is a state-of-the-art object detection algorithm known for its speed and accuracy. It builds on the YOLO family with a redesigned architecture that improves detection performance across various tasks. Key strengths include real-time detection capabilities, enhanced accuracy for small objects, and adaptability to diverse datasets. YOLOv8 features dynamic anchor-free detection, improved backbone networks, and advanced loss functions for better convergence. It supports tasks like object detection, instance segmentation, and pose estimation. Its lightweight design ensures efficiency on edge devices and GPUs, making it versatile for real-world applications.
 
 #### Configuration
-
+#### YOLOv8x
 ##### Install YOLOv8 
 
 ```
@@ -106,86 +103,72 @@ dataset = version.download("yolov8")
 
 !yolo task=detect mode=train model=yolov8x.pt data=/content/datasets/students-behaviors-detection-4/data.yaml epochs=120 imgsz=800 plots=True
 ```
-120 epochs completed in 4.345 hours.
-Optimizer stripped from runs/detect/train2/weights/last.pt, 123.8MB
-Optimizer stripped from runs/detect/train2/weights/best.pt, 123.8MB
-
-Validating runs/detect/train2/weights/best.pt...
-Ultralytics 8.3.9 🚀 Python-3.10.12 torch-2.4.1+cu121 CUDA:0 (NVIDIA A100-SXM4-40GB, 40514MiB)
-Model summary (fused): 286 layers, 61,606,161 parameters, 0 gradients, 226.8 GFLOPs
-                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% 15/15 [00:05<00:00,  2.76it/s]
-                   all        450       1849       0.79      0.794      0.845      0.545
-           Closed-Book        171        296      0.857      0.868      0.919       0.58
-       Electronic-Book          5         12      0.993      0.833      0.932      0.486
-               No-Book        167        312      0.809      0.875      0.876      0.559
-           Opened-Book        272        619      0.881      0.874      0.917      0.601
-          Raising-Hand        119        239      0.878      0.811      0.879      0.516
-       Student-Answers         36         39      0.795      0.718      0.871      0.581
-         Student-Reads         54         69      0.627      0.493      0.552      0.402
-        Student-Writes         37         60      0.688      0.633        0.7      0.443
-      Teacher-Explains         65         65      0.872      0.944      0.951      0.712
-Teacher-Follows-up-Students          7          7      0.477      0.857       0.85      0.597
-             Worksheet         84        131      0.809      0.832      0.844      0.517
-Speed: 0.2ms preprocess, 5.0ms inference, 0.0ms loss, 2.9ms postprocess per image
-Results saved to runs/detect/train2
+![Results YOLOvx1](https://github.com/user-attachments/assets/4a0a0dc4-09ac-4b55-a429-fe71b2776f92)
 
 ##### Visualize Training Results   
 ```
 %cd {HOME}
 Image(filename=f'{HOME}/runs/detect/train2/confusion_matrix.png', width=600)!pip install -U ultralytics
 ```
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+![Figure8a_CM_ YOLOv8x](https://github.com/user-attachments/assets/09e6c208-ae1b-4766-98cc-f6aa776a6211)
 
 ```
 %cd {HOME}
 Image(filename=f'{HOME}/runs/detect/train2/results.png', width=600)
 ```
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
-
-```
-%cd {HOME}
-Image(filename=f'{HOME}/runs/detect/train/val_batch0_pred.jpg', width=600)
-```
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+![results](https://github.com/user-attachments/assets/ad847446-b2e0-49e9-aecc-0dbdd4682b04)
 
 ##### Model Validation (YOLOv8x) 
 ```
 %cd /content
 !yolo task=detect mode=val model=/content/runs/detect/train2/weights/best.pt data=/content/datasets/students-behaviors-detection-4/data.yaml
 ```
-/content
-Ultralytics 8.3.9 🚀 Python-3.10.12 torch-2.4.1+cu121 CUDA:0 (NVIDIA A100-SXM4-40GB, 40514MiB)
-Model summary (fused): 286 layers, 61,606,161 parameters, 0 gradients, 226.8 GFLOPs
-val: Scanning /content/datasets/students-behaviors-detection-4/valid/labels.cache... 450 images, 15 backgrounds, 0 corrupt: 100% 450/450 [00:00<?, ?it/s]
-                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100% 29/29 [00:07<00:00,  3.93it/s]
-                   all        450       1849       0.79      0.794      0.845      0.545
-           Closed-Book        171        296      0.857      0.868      0.919      0.579
-       Electronic-Book          5         12      0.995      0.833      0.932      0.487
-               No-Book        167        312       0.81      0.874      0.876      0.559
-           Opened-Book        272        619      0.881      0.873      0.917        0.6
-          Raising-Hand        119        239      0.878       0.81      0.879      0.517
-       Student-Answers         36         39      0.795      0.718      0.871      0.574
-         Student-Reads         54         69      0.628      0.493      0.555      0.404
-        Student-Writes         37         60      0.689      0.633      0.698      0.441
-      Teacher-Explains         65         65      0.872      0.942       0.95      0.713
-Teacher-Follows-up-Students          7          7      0.479      0.857       0.85      0.597
-             Worksheet         84        131      0.809      0.832      0.844      0.519
-Speed: 0.9ms preprocess, 8.3ms inference, 0.0ms loss, 3.5ms postprocess per image
-Results saved to runs/detect/val
-💡 Learn more at https://docs.ultralytics.com/modes/val
+![Val_YOLOv8x](https://github.com/user-attachments/assets/468b3972-f00c-447f-9632-5e5c65e781ac)
 
 ##### Model Inference (YOLOv8x) 
 ```
-%cd /content
-!yolo task=detect mode=predict model=/content/runs/detect/train/weights/best.pt conf=0.5 source=/content/datasets/students-behaviors-detection-4/test/images save=True
-```
+from ultralytics import YOLO
+import os
+import json
 
-##### Model Inference (YOLOv8x) 
-```
-%cd /content
-!yolo task=detect mode=predict model=/content/runs/detect/train/weights/best.pt conf=0.5 source=/content/datasets/students-behaviors-detection-4/test/images save=True
-```
+# Load YOLOv8 model (assuming yolov8x.pt or custom-trained weights path)
+model_yolov8 = YOLO("/content/drive/MyDrive/AAbFFSSNew/runsYOLOv8x/detect/train2/weights/best.pt")
 
+# Run predictions on the test folder and save images with labels
+results = model_yolov8.predict(
+    source="/content/students-behaviors-detection-3/test/images",  # Path to test images folder
+    conf=0.5,  # Confidence threshold
+    save=True,  # Save output images with predictions
+    project="/content",  # Directory to save results
+    name="YOLOv8XXtested_images_with_labels"  # Subfolder name
+)
+
+# Prepare data for JSON output
+json_output = []
+for result in results:
+    image_info = {
+        "image_name": os.path.basename(result.path),  # Image filename only
+        "predictions": []
+    }
+
+    for box in result.boxes:
+        prediction = {
+            "class": int(box.cls),  # Class ID
+            "confidence": float(box.conf),  # Confidence score
+            "bbox": [float(coord) for coord in box.xyxy[0].tolist()]  # Bounding box [x1, y1, x2, y2]
+        }
+        image_info["predictions"].append(prediction)
+
+    json_output.append(image_info)
+
+# Save the JSON output
+output_json_path = "/content/YOLOv8_predictions.json"
+with open(output_json_path, "w") as json_file:
+    json.dump(json_output, json_file, indent=4)
+
+print(f"Labeled images saved in /content/YOLOv8XXtested_images_with_labels")
+print(f"Predictions saved as JSON in {output_json_path}")
+```
 ##### Visualize Inference Results (YOLOv8x) 
 ```
 import glob
@@ -208,10 +191,163 @@ for image_path in image_paths:
     display(Image(filename=image_path, width=600))
     print("\n")
 ```
-
-![image](https://github.com/ArwaASM/In-classroom-Interaction-Detection/blob/main/Training%20Sample%20.png?raw=true)
+![Figure 10b_YOLOv8X](https://github.com/user-attachments/assets/8d2d3d8e-1216-450e-8a5f-03e888c88fdc)
 
 ##### Deploy Model on Roboflow (YOLOv8x) 
+```
+project.version(dataset.version).deploy(model_type="yolov8", model_path=f"{HOME}/runs/detect/train2/")
+
+import glob
+from IPython.display import Image, display
+
+# Define the base path where the folders are located
+base_path = '/content/runs/detect/'
+
+# List all directories that start with 'predict' in the base path
+subfolders = [os.path.join(base_path, d) for d in os.listdir(base_path)
+              if os.path.isdir(os.path.join(base_path, d)) and d.startswith('predict2')]
+
+# Find the latest folder by modification time
+latest_folder = max(subfolders, key=os.path.getmtime)
+
+image_paths = glob.glob(f'{latest_folder}/*.jpg')[:5]
+
+# Display each image
+for image_path in image_paths:
+    display(Image(filename=image_path, width=600))
+    print("\n")
+```
+
+#### YOLOv8l
+##### Install YOLOv8 
+
+```
+# Pip install method (recommended)
+
+!pip install ultralytics==8.0.196
+
+from IPython import display
+display.clear_output()
+
+import ultralytics
+ultralytics.checks()
+
+from ultralytics import YOLO
+
+from IPython.display import display, Image
+
+```
+
+##### Install Roboflow  
+```
+!pip install roboflow --quiet
+
+!pip install roboflow
+```
+
+##### Import the Dataset 
+```
+from roboflow import Roboflow
+rf = Roboflow(api_key="Tp9HSxuOcXKVDZCz5***")
+project = rf.workspace("arwa-almubarak-yiboc").project("students-behaviors-detection-wkavr")
+version = project.version(4)
+dataset = version.download("yolov8")
+
+```
+##### Model Training (YOLOv8l)   
+```
+!pip install -U albumentations
+!pip install -U ultralytics
+
+%cd /content
+
+!yolo task=detect mode=train model=yolov8l.pt data=/content/datasets/students-behaviors-detection-4/data.yaml epochs=120 imgsz=800 plots=True
+```
+![Results YOLOvl1](https://github.com/user-attachments/assets/bec67642-56c5-415c-9fbd-fa79ad630171)
+
+##### Visualize Training Results   
+```
+%cd {HOME}
+Image(filename=f'{HOME}/runs/detect/train2/results.png', width=600)
+```
+![results (1)](https://github.com/user-attachments/assets/4fcc42d2-86f5-46a0-b1dd-9a85ab359bbe)
+
+##### Model Validation (YOLOv8l) 
+```
+%cd /content
+!yolo task=detect mode=val model=/content/runs/detect/train2/weights/best.pt data=/content/datasets/students-behaviors-detection-4/data.yaml
+```
+![Val_YOLOv8l](https://github.com/user-attachments/assets/f9c749ba-cea0-4038-a041-a6819ac9ea7e)
+
+##### Model Inference (YOLOv8l) 
+```
+from ultralytics import YOLO
+import os
+import json
+
+# Load YOLOv8 model (assuming yolov8x.pt or custom-trained weights path)
+model_yolov8 = YOLO("/content/drive/MyDrive/AAbFFSSNew/runsYOLOv8x/detect/train2/weights/best.pt")
+
+# Run predictions on the test folder and save images with labels
+results = model_yolov8.predict(
+    source="/content/students-behaviors-detection-3/test/images",  # Path to test images folder
+    conf=0.5,  # Confidence threshold
+    save=True,  # Save output images with predictions
+    project="/content",  # Directory to save results
+    name="YOLOv8XXtested_images_with_labels"  # Subfolder name
+)
+
+# Prepare data for JSON output
+json_output = []
+for result in results:
+    image_info = {
+        "image_name": os.path.basename(result.path),  # Image filename only
+        "predictions": []
+    }
+
+    for box in result.boxes:
+        prediction = {
+            "class": int(box.cls),  # Class ID
+            "confidence": float(box.conf),  # Confidence score
+            "bbox": [float(coord) for coord in box.xyxy[0].tolist()]  # Bounding box [x1, y1, x2, y2]
+        }
+        image_info["predictions"].append(prediction)
+
+    json_output.append(image_info)
+
+# Save the JSON output
+output_json_path = "/content/YOLOv8_predictions.json"
+with open(output_json_path, "w") as json_file:
+    json.dump(json_output, json_file, indent=4)
+
+print(f"Labeled images saved in /content/YOLOv8XXtested_images_with_labels")
+print(f"Predictions saved as JSON in {output_json_path}")
+```
+##### Visualize Inference Results (YOLOv8x) 
+```
+import glob
+from IPython.display import Image, display
+
+# Define the base path where the folders are located
+base_path = '/content/runs/detect/'
+
+# List all directories that start with 'predict' in the base path
+subfolders = [os.path.join(base_path, d) for d in os.listdir(base_path)
+              if os.path.isdir(os.path.join(base_path, d)) and d.startswith('predict2')]
+
+# Find the latest folder by modification time
+latest_folder = max(subfolders, key=os.path.getmtime)
+
+image_paths = glob.glob(f'{latest_folder}/*.jpg')[:5]
+
+# Display each image
+for image_path in image_paths:
+    display(Image(filename=image_path, width=600))
+    print("\n")
+```
+![Figure 10c_YOLOv8L](https://github.com/user-attachments/assets/321e22fb-dddc-4866-8c5b-a04ad186b06d)
+
+##### Deploy Model on Roboflow (YOLOv8l) 
 ```
 project.version(dataset.version).deploy(model_type="yolov8", model_path=f"{HOME}/runs/detect/train/")
 
@@ -246,7 +382,11 @@ RetinaNet, or Retinal Neural Network, is a one-stage object detection algorithm 
 
 ## Models Validating
 
+
+
 ## Models Testing (Inference)
+
+
 
 ## Comparison Results
 
