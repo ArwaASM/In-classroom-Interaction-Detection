@@ -13,6 +13,8 @@ This project uses three object detection algorithms: YOLOv8, Faster-RCNN, and Re
 3. Teacher Activities: Teacher Follows up Students and Teacher Explains.
 4. Student Activities: Student Reads and Student Writes.
 
+![Figure3](https://github.com/user-attachments/assets/7d3b8e6b-a8f7-4599-b583-8600f4b08b94)
+
 - Saved the testing dataset with bounding boxes and confidence scores.
 
 - Compared the models' accuracy, and selected the most accurate one, to be optimized later. 
