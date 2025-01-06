@@ -53,6 +53,28 @@ The dataset was split into 70% for training, 15% for validation, and 15% for tes
 
 ## Installation
 
+1. Clone the repository:
+```
+git clone https://github.com/ArwaASM/In-classroom-Interaction-Detection
+```
+2. Install the required dependencies:
+```
+pip install -r requirements
+```
+3. Follow the Google Colab Links Table
+
+| Notebook Name                               | Open in Colab                                   |
+|---------------------------------------------|------------------------------------------------|
+| YOLOv8x                                     | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/YOLOv8x_Training.ipynb) |
+| YOLOv8l                                     | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/YOLOv8l_Training.ipynb) |
+| Faster_RCNN_R_50 and RetinaNet_R_50         | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/Faster_RCNN_and_RetinaNet_R_50_Training.ipynb) |
+| Faster_RCNN_R_101 and RetinaNet_R_101       | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/Faster_RCNN_and_RetinaNet_R_101_Training.ipynb) |
+| Faster_RCNN_RX_101                          | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/Faster_RCNN_X_101_Training.ipynb) |
+| YOLOv8 Evaluation                           | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/YOLOv8_Evaluation.ipynb) |
+| Faster_RCNN Models Evaluation               | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/Models_Evaluation_and_Confusion_Matrices_(Faster_RCNN).ipynb) |
+| RetinaNet Models Evaluation                 | [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ArwaASM/TPE/blob/main/Models_Evaluation_and_Confusion_Matrices_(RetinaNet).ipynb) |
+
+
 ## Models Training
 
 ### YOLOv8 models
